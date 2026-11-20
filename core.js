@@ -1,4 +1,4 @@
-/* ================================================================
+﻿/* ================================================================
    COCKPIT — cœur : config, données temps réel, analyse, modules
    ================================================================ */
 (function(){
@@ -129,8 +129,8 @@ function setTheme(t,btn){
 CK.setTheme=setTheme;
 /* Logo Captain Trading (fichier de la marque) : version fond sombre (mot-symbole blanc) et version fond clair (mot-symbole marine) */
 var LOGO = {
-  dark: "ban.png",
-  light: "ban.png",
+  dark: "",
+  light: "",
   fav: "ban.png"
 };
 function applyIdentity(){
@@ -142,7 +142,7 @@ function applyIdentity(){
   $("bName").textContent=nm;$("bSub").textContent=tg;
   document.title=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
   $("footBrand").textContent=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
-  var mk=$("brandMark");if(!mk.firstChild)mk.innerHTML='<img class="lg-on-dark" src="'+LOGO.dark+'" alt="Captain Trading"><img class="lg-on-light" src="'+LOGO.light+'" alt="">';
+  var mk=$("brandMark");if(!mk.firstChild)mk.innerHTML='';
   /* le logo contient déjà « captain TRADING » : le texte ne s'affiche que pour un nom personnalisé */
   document.querySelector(".brand").classList.toggle("custom",nm!=="captain");
   var fav=document.querySelector('link[rel="icon"]');if(!fav){fav=document.createElement("link");fav.rel="icon";fav.type="image/png";fav.href=LOGO.fav;document.head.appendChild(fav);}
