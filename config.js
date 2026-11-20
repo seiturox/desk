@@ -5,7 +5,7 @@
    ================================================================ */
 window.COCKPIT_CONFIG = {
   id: "sei-desk",                 // identifiant interne (sauvegardes du navigateur)
-  name: "Sei`",            // nom affiché en haut à gauche (« captain » = logo Desk)
+  name: "Sei`",            // nom affiché en haut à gauche (logo Desk)
   tagline: "Trading · Desk",   // sous-titre sous le nom
   accent: "#FF8A3D",             // couleur d'accent (toute l'interface suit)
   theme: "dark",                 // affichage au premier lancement : "dark" ou "light"

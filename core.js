@@ -27,7 +27,7 @@ function merge(a,b){var o={};Object.keys(a||{}).forEach(function(k){o[k]=clone(a
   Object.keys(b||{}).forEach(function(k){o[k]=isObj(b[k])&&isObj(o[k])?merge(o[k],b[k]):clone(b[k]);});return o;}
 var BAKED = merge(DEF, window.COCKPIT_CONFIG||{});
 if(BAKED.theme!=="light")BAKED.theme="dark";
-var NS = "cockpit:"+(BAKED.id||"captain")+":";
+var NS = "cockpit:"+(BAKED.id||"sei")+":";
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(NS+k);if(v===null)localStorage.removeItem(NS+k);else localStorage.setItem(NS+k,v);}catch(e){return null;}}
 function lsj(k,v){if(v===undefined){try{return JSON.parse(ls(k));}catch(e){return null;}}ls(k,v===null?null:JSON.stringify(v));}
 var C = merge(BAKED, lsj("cfg")||{});
@@ -135,16 +135,16 @@ var LOGO = {
 };
 function applyIdentity(){
   root.style.setProperty("--accent",C.accent||DEF.accent);
-  /* Anciennes configs « CAPTAIN / cockpit » → nouvelle marque */
-  /* Anciennes configs (CAPTAIN, COCKPIT, DESK) → marque Desk */
-  var old=!C.name||/^(CAPTAIN|COCKPIT|DESK)$/.test(C.name),nm=old?"captain":C.name,tg=(old&&(C.tagline==null||C.tagline==="cockpit"||C.tagline==="Crypto · Macro"))?"Trading · Desk":C.tagline;
+  /* Anciennes configs « SEI / cockpit » → nouvelle marque */
+  /* Anciennes configs (SEI, COCKPIT, DESK) → marque Desk */
+  var old=!C.name||/^(SEI|COCKPIT|DESK)$/.test(C.name),nm=old?"SEI":C.name,tg=(old&&(C.tagline==null||C.tagline==="cockpit"||C.tagline==="Crypto · Macro"))?"Trading · Desk":C.tagline;
   C.name=nm;C.tagline=tg;
   $("bName").textContent=nm;$("bSub").textContent=tg;
   document.title=nm+" · Desk";
   $("footBrand").textContent=nm+" · Desk";
   var mk=$("brandMark");if(!mk.firstChild)mk.innerHTML='';
   /* le logo contient déjà « Desk » : le texte ne s'affiche que pour un nom personnalisé */
-  document.querySelector(".brand").classList.toggle("custom",nm!=="captain");
+  document.querySelector(".brand").classList.toggle("custom",nm!=="Sei\x27");
   var fav=document.querySelector('link[rel="icon"]');if(!fav){fav=document.createElement("link");fav.rel="icon";fav.type="image/png";fav.href=LOGO.fav;document.head.appendChild(fav);}
   document.body.classList.toggle("beginner",!!C.beginner);
   /* Un bloc disparaît aussi si son espace est décoché dans le Studio (ex. Screener) */
@@ -578,7 +578,7 @@ var WIRE={ts:0,tree:[],tg:[]};
 /* ---------- News Telegram (Walter Bloomberg, Watcher Guru, PhoenixNews, BWEnews, unfolded, Whale Alert) ----------
    Via le relais Cloudflare du Desk (relais/desk-news-worker.js), commun à tous les utilisateurs.
    Une seule requête par minute pour toutes les chaînes, seulement quand l'onglet est visible et dans un seul onglet. Vide = désactivé. */
-var TG_URL="https://desk-news.captainmanagement8.workers.dev";
+var TG_URL="https://seiturox.github.io/desk";
 function wireParse(a){var out=[],seen={};
   (Array.isArray(a)?a:[]).forEach(function(x){if(!x||!x.title||!x.time)return;var s=x.source||"",t=String(x.en||x.title).replace(/\s+/g," ").trim(),src="",keep=false,kind="tree",h="",nm="";
     if(s==="Twitter"){var m=t.match(/^(.{1,60}?) \(@([A-Za-z0-9_]+)\):\s*(.*)$/);if(!m)return;h=m[2];

@@ -35,7 +35,7 @@ function renderStudio(){
 function segVal(id){var b=document.querySelector("#"+id+' [aria-pressed="true"]');return b?b.getAttribute("data-v"):"";}
 function readStudio(){
   var C=CK.merge(CK.cfg(),{}),v=function(id){return $(id).value;};
-  C.name=v("sName").trim()||"captain";C.tagline=v("sTag").trim();
+  C.name=v("sName").trim()||"sei";C.tagline=v("sTag").trim();
   C.theme=segVal("sTheme")||"dark";C.newsLang=segVal("sLang")||"fr";C.beginner=$("sBeg").checked;
   C.watchlist=v("sWatch").split(/[,\s;]+/).map(function(x){return x.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");}).filter(Boolean).slice(0,12);
   if(!C.watchlist.length)C.watchlist=["BTC","ETH","SOL"];
