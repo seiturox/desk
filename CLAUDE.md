@@ -1,4 +1,4 @@
-# Captain Trading · Desk — guide pour l'agent IA
+﻿# Desk · Desk — guide pour l'agent IA
 
 Ce fichier explique le projet à un agent IA (Claude Code ou autre) pour qu'il puisse le modifier sans rien casser.
 La personne qui te parle ne sait probablement pas coder : réponds en français simple, fais les modifications toi-même, puis vérifie-les.
@@ -105,5 +105,5 @@ Le bouton « Studio » permet de choisir les espaces affichés sur l'accueil (`e
 
 ## Le robot (optionnel)
 
-Par défaut, `data` dans `config.js` pointe vers le robot de Captain Trading : l'agenda et les news fonctionnent tout de suite.
+Par défaut, `data` dans `config.js` pointe vers le robot de Desk : l'agenda et les news fonctionnent tout de suite.
 Pour avoir ton propre robot : mets ce dossier sur ton GitHub, active GitHub Pages (Settings → Pages → Source : GitHub Actions), puis remplace `data` par `https://TON-PSEUDO.github.io/NOM-DU-DEPOT`. Le fichier `.github/workflows/desk.yml` fait tourner `robot.mjs` toutes les 10 minutes.

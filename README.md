@@ -1,8 +1,8 @@
-# Captain Trading · Desk
+﻿# Desk · Desk
 
 Un terminal de trading crypto et macro, gratuit, dans ton navigateur : sessions et annonces de la journée, signaux, carte des liquidations, screener, carnet d'ordres agrégé, news et tweets à la minute traduits en français (Trump sur Truth Social, comptes qui pistent les baleines…), et **un agent IA qui lit le marché toutes les 30 min** avec ses niveaux et son bilan.
 
-## 👉 [Ouvrir le Desk](https://captaincryptotrading21.github.io/desk)
+## 👉 [Ouvrir le Desk](https://seiturox.github.io/desk/)
 
 Gratuit · sans inscription · sur ordinateur et téléphone.
 Le guide complet, le fichier à télécharger et les tutos vidéo : **[captain-trading.com/ia-trading](https://captain-trading.com/ia-trading)**
@@ -22,7 +22,7 @@ Par exemple un dossier `mon-desk` sur ton bureau.
 **3. Colle ce texte**
 
 ```
-Récupère le projet https://github.com/captaincryptotrading21/desk dans ce dossier. Lis le fichier CLAUDE.md pour comprendre comment il est construit, puis ouvre index.html dans mon navigateur pour que je voie mon Desk. Si un outil manque sur mon ordinateur (Git ou Node.js), installe-le ou explique-moi simplement comment faire. Ensuite, demande-moi ce que je veux changer, fais les modifications une par une et montre-moi le résultat à chaque fois.
+Récupère le projet https://github.com/seiturox/desk dans ce dossier. Lis le fichier CLAUDE.md pour comprendre comment il est construit, puis ouvre index.html dans mon navigateur pour que je voie mon Desk. Si un outil manque sur mon ordinateur (Git ou Node.js), installe-le ou explique-moi simplement comment faire. Ensuite, demande-moi ce que je veux changer, fais les modifications une par une et montre-moi le résultat à chaque fois.
 ```
 
 Ensuite, demande ce que tu veux : « Passe toute l'interface en violet », « Ajoute AVAX et LINK en haut », « Ajoute un bloc avec le prix de l'or »…
@@ -56,4 +56,4 @@ Ensuite, demande ce que tu veux : « Passe toute l'interface en violet », « Aj
 
 ⚠️ Outil d'information, pas un conseil en investissement. Les données viennent de sources publiques et peuvent être incomplètes ou en retard. Le trading comporte un risque de perte en capital.
 
-Créé par Captain Trading · [Licence](LICENSE.md) : usage personnel libre, revente interdite.
+Créé par Desk · [Licence](LICENSE.md) : usage personnel libre, revente interdite.

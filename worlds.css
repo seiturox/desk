@@ -1,4 +1,4 @@
-/* ================================================================
+﻿/* ================================================================
    Menu principal « Choisis ton monde » + mondes (sous-menus)
    Courbe « OS » : cubic-bezier(.32,.72,0,1)
    ================================================================ */
@@ -349,7 +349,7 @@ html{overflow-x:clip}
 /* ================= Rendu pro : en-tête et marque ================= */
 .top{padding:12px var(--pad);gap:20px}
 .brand{gap:12px;cursor:pointer;border-radius:10px;outline-offset:6px}
-/* Marque Captain Trading : tête + ailes, mot-symbole « captain » en minuscules épaisses, « TRADING » espacé */
+/* Marque Desk : tête + ailes, mot-symbole « captain » en minuscules épaisses, « TRADING » espacé */
 .mark{width:128px;height:40px;position:relative}
 .brand:not(.custom) .bt{display:none}
 .brand.custom .mark{width:40px;overflow:hidden}

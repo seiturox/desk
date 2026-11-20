@@ -5,7 +5,7 @@
    ================================================================ */
 window.COCKPIT_CONFIG = {
   id: "sei-desk",                 // identifiant interne (sauvegardes du navigateur)
-  name: "Sei`",            // nom affiché en haut à gauche (« captain » = logo Captain Trading)
+  name: "Sei`",            // nom affiché en haut à gauche (« captain » = logo Desk)
   tagline: "Trading · Desk",   // sous-titre sous le nom
   accent: "#FF8A3D",             // couleur d'accent (toute l'interface suit)
   theme: "dark",                 // affichage au premier lancement : "dark" ou "light"
@@ -22,5 +22,5 @@ window.COCKPIT_CONFIG = {
   screenerPreset: "compression", // préréglage du screener au lancement
   screenerMax: 150,              // nombre de coins analysés (les plus liquides d'OKX)
   newsLang: "fr",                // "fr" = headlines traduites, "vo" = version originale
-  data: "https://captaincryptotrading21.github.io/desk"                       // adresse du site GitHub du Desk (robot : agenda, news crypto, FinancialJuice)
+  data: "https://seiturox.github.io/desk/"                       // adresse du site GitHub du Desk (robot : agenda, news crypto, FinancialJuice)
 };

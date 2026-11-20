@@ -13,7 +13,7 @@ CK.reduce = reduce;
 
 /* ---------------- Config ---------------- */
 var DEF = {
-  id:"captain", name:"captain", tagline:"Trading · Desk", data:"", accent:"#FF8A3D", theme:"dark", beginner:false,
+  id:"sei", name:"Sei\x27", tagline:"Trading · Desk", data:"", accent:"#FF8A3D", theme:"dark", beginner:false,
   watchlist:["BTC","ETH","SOL"],
   modules:{day:true,map:true,events:true,deriv:true,liq:true,movers:true,screener:true,news:true,levels:true,opts:true,book:true,corr:true,net:true,veille:true},
   layout:null,
@@ -127,7 +127,7 @@ function setTheme(t,btn){
   else apply();
 }
 CK.setTheme=setTheme;
-/* Logo Captain Trading (fichier de la marque) : version fond sombre (mot-symbole blanc) et version fond clair (mot-symbole marine) */
+/* Logo Desk (fichier de la marque) : version fond sombre (mot-symbole blanc) et version fond clair (mot-symbole marine) */
 var LOGO = {
   dark: "",
   light: "",
@@ -136,14 +136,14 @@ var LOGO = {
 function applyIdentity(){
   root.style.setProperty("--accent",C.accent||DEF.accent);
   /* Anciennes configs « CAPTAIN / cockpit » → nouvelle marque */
-  /* Anciennes configs (CAPTAIN, COCKPIT, DESK) → marque Captain Trading */
+  /* Anciennes configs (CAPTAIN, COCKPIT, DESK) → marque Desk */
   var old=!C.name||/^(CAPTAIN|COCKPIT|DESK)$/.test(C.name),nm=old?"captain":C.name,tg=(old&&(C.tagline==null||C.tagline==="cockpit"||C.tagline==="Crypto · Macro"))?"Trading · Desk":C.tagline;
   C.name=nm;C.tagline=tg;
   $("bName").textContent=nm;$("bSub").textContent=tg;
-  document.title=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
-  $("footBrand").textContent=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
+  document.title=nm+" · Desk";
+  $("footBrand").textContent=nm+" · Desk";
   var mk=$("brandMark");if(!mk.firstChild)mk.innerHTML='';
-  /* le logo contient déjà « captain TRADING » : le texte ne s'affiche que pour un nom personnalisé */
+  /* le logo contient déjà « Desk » : le texte ne s'affiche que pour un nom personnalisé */
   document.querySelector(".brand").classList.toggle("custom",nm!=="captain");
   var fav=document.querySelector('link[rel="icon"]');if(!fav){fav=document.createElement("link");fav.rel="icon";fav.type="image/png";fav.href=LOGO.fav;document.head.appendChild(fav);}
   document.body.classList.toggle("beginner",!!C.beginner);
