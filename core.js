@@ -177,7 +177,28 @@ function roll(el,txt,up){var old=el.getAttribute("data-v")||"";if(old===txt)retu
   [].forEach.call(el.children,function(s,i){if(txt[i]!==old[i]&&s.animate)s.animate([{transform:"translateY("+(up?"70%":"-70%")+")",opacity:0},{transform:"none",opacity:1}],{duration:280,easing:"cubic-bezier(.23,1,.32,1)"});});}
 CK.roll=roll;
 var tickQueued=false;
-function queueTicks(){if(tickQueued)return;tickQueued=true;setTimeout(function(){tickQueued=false;paintTicks();if(CK.liqmap)CK.liqmap.price();},300);}
+setInterval(function(){
+  if(watch().indexOf("XMR")===-1)return;
+  fetch("https://api.kraken.com/0/public/Ticker?pair=XMRUSD",{cache:"no-store"})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      var d=j&&j.result&&(j.result.XXMRZUSD||j.result.XMRUSD||Object.values(j.result)[0]);
+      if(!d||!d.c||!d.o)return;
+      S.tick["XMR-USDT"]={last:+d.c[0],open:+d.o,open24h:+d.o,chg:(+d.o>0?(+d.c[0]/+d.o-1)*100:0),high24h:+(d.h?d.h[1]:d.c[0]),low24h:+(d.l?d.l[1]:d.c[0]),ts:Date.now()};
+      queueTicks();
+    }).catch(function(){});
+},12000);
+setTimeout(function(){
+  if(watch().indexOf("XMR")===-1)return;
+  fetch("https://api.kraken.com/0/public/Ticker?pair=XMRUSD",{cache:"no-store"})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      var d=j&&j.result&&(j.result.XXMRZUSD||j.result.XMRUSD||Object.values(j.result)[0]);
+      if(!d||!d.c||!d.o)return;
+      S.tick["XMR-USDT"]={last:+d.c[0],open:+d.o,open24h:+d.o,chg:(+d.o>0?(+d.c[0]/+d.o-1)*100:0),high24h:+(d.h?d.h[1]:d.c[0]),low24h:+(d.l?d.l[1]:d.c[0]),ts:Date.now()};
+      queueTicks();
+    }).catch(function(){});
+},500);function queueTicks(){if(tickQueued)return;tickQueued=true;setTimeout(function(){tickQueued=false;paintTicks();if(CK.liqmap)CK.liqmap.price();},300);}
 function paintMacroStrip(){
   MACRO_STRIP.forEach(function(m){var d=S.mk[m.k];var pe=document.querySelector('[data-mp="'+m.k+'"]'),ce=document.querySelector('[data-mc="'+m.k+'"]');if(!d||!pe)return;
     if(m.k==="US10Y"){pe.textContent=nf(d.c,3)+" %";var bp=d.c-d.c/(1+(d.ch||0)/100);ce.textContent=(bp>=0?"+":"−")+nf(Math.abs(bp*100),1)+" pb";ce.className="c "+cls(bp);}
@@ -790,53 +811,4 @@ CK.boot=function(){
   setInterval(function(){if(!document.hidden)renderNewsSoft();},60000);
 };
 window.Cockpit={boot:function(){CK.boot();}};
-})();
-
-/* === PATCH KRAKEN XMR BANDEAU === */
-(function initKrakenXmrTicker() {
-  async function pollKrakenXmr() {
-    try {
-      const watched = (typeof watch === "function" ? watch() : []).map(s => String(s).toUpperCase());
-      if (!watched.includes("XMR")) return;
-
-      const res = await fetch("https://api.kraken.com/0/public/Ticker?pair=XMRUSD", { cache: "no-store" });
-      if (!res.ok) return;
-      const json = await res.json();
-      const pairData = json && json.result && (json.result.XXMRZUSD || json.result.XMRUSD || Object.values(json.result)[0]);
-      if (!pairData || !pairData.c || !pairData.o) return;
-
-      const last = parseFloat(pairData.c[0]);
-      const open24h = parseFloat(pairData.o);
-      const high24h = pairData.h ? parseFloat(pairData.h[1]) : last;
-      const low24h = pairData.l ? parseFloat(pairData.l[1]) : last;
-
-      if (!Number.isFinite(last) || last <= 0) return;
-
-      if (typeof onTickers === "function") {
-        onTickers([{
-          instId: "XMR-USDT",
-          last: String(last),
-          open24h: String(Number.isFinite(open24h) && open24h > 0 ? open24h : last),
-          high24h: String(high24h),
-          low24h: String(low24h),
-          ts: String(Date.now())
-        }]);
-      } else if (typeof S !== "undefined" && S.tick) {
-        S.tick["XMR-USDT"] = { last, open24h, high24h, low24h, ts: Date.now() };
-        if (typeof queueTicks === "function") queueTicks();
-      }
-    } catch (e) {
-      /* échec silencieux en cas de coupure réseau passagère */
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      setTimeout(pollKrakenXmr, 800);
-      setInterval(pollKrakenXmr, 15000);
-    });
-  } else {
-    setTimeout(pollKrakenXmr, 800);
-    setInterval(pollKrakenXmr, 15000);
-  }
 })();
