@@ -9,14 +9,14 @@
 <meta property="og:site_name" content="Sei'">
 <meta property="og:title" content="Sei' · Desk">
 <meta property="og:description" content="Le desk crypto gratuit : prix et liquidations en direct, news X, Trump et onchain, et un agent IA qui lit le marché toutes les 30 min.">
-<meta property="og:url" content="https://captaincryptotrading21.github.io/desk/">
-<meta property="og:image" content="https://captaincryptotrading21.github.io/desk/apercu.png">
+<meta property="og:url" content="https://seiturox.github.io/desk/">
+<meta property="og:image" content="https://seiturox.github.io/desk/apercu.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sei' · Desk">
 <meta name="twitter:description" content="Le desk crypto gratuit : prix et liquidations en direct, news X, Trump et onchain, et un agent IA qui lit le marché toutes les 30 min.">
-<meta name="twitter:image" content="https://captaincryptotrading21.github.io/desk/apercu.png">
+<meta name="twitter:image" content="https://seiturox.github.io/desk/apercu.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
    ================================================================ */
 window.COCKPIT_CONFIG = {
   id: "sei-desk",                 // identifiant interne (sauvegardes du navigateur)
-  name: "Sei`",            // nom affiché en haut à gauche (« captain » = logo Captain Trading)
+  name: "Sei`",            // nom affiché en haut à gauche (logo Desk)
   tagline: "Trading · Desk",   // sous-titre sous le nom
   accent: "#FF8A3D",             // couleur d'accent (toute l'interface suit)
   theme: "dark",                 // affichage au premier lancement : "dark" ou "light"
@@ -46,12 +46,12 @@ window.COCKPIT_CONFIG = {
   screenerPreset: "compression", // préréglage du screener au lancement
   screenerMax: 150,              // nombre de coins analysés (les plus liquides d'OKX)
   newsLang: "fr",                // "fr" = headlines traduites, "vo" = version originale
-  data: "https://captaincryptotrading21.github.io/desk"                       // adresse du site GitHub du Desk (robot : agenda, news crypto, FinancialJuice)
+  data: "https://seiturox.github.io/desk/"                       // adresse du site GitHub du Desk (robot : agenda, news crypto, FinancialJuice)
 };
 </script>
 <script>
 /* Applique le thème avant l'affichage (évite un flash) */
-(function(){try{var c=window.COCKPIT_CONFIG||{},k="cockpit:"+(c.id||"captain")+":",t=localStorage.getItem(k+"theme")||c.theme||"dark";if(t!=="light")t="dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();
+(function(){try{var c=window.COCKPIT_CONFIG||{},k="cockpit:"+(c.id||"sei")+":",t=localStorage.getItem(k+"theme")||c.theme||"dark";if(t!=="light")t="dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}})();
 </script>
 <style>
 /* ================================================================
@@ -833,7 +833,7 @@ body.editing .door-go{display:none}
 .news-src .ns-live{background:var(--up);animation:ping2 1.6s var(--ease-out) infinite}
 .news-src .ns-rb{background:var(--warn)}
 
-/* ================================================================
+﻿/* ================================================================
    Menu principal « Choisis ton monde » + mondes (sous-menus)
    Courbe « OS » : cubic-bezier(.32,.72,0,1)
    ================================================================ */
@@ -1184,7 +1184,7 @@ html{overflow-x:clip}
 /* ================= Rendu pro : en-tête et marque ================= */
 .top{padding:12px var(--pad);gap:20px}
 .brand{gap:12px;cursor:pointer;border-radius:10px;outline-offset:6px}
-/* Marque Captain Trading : tête + ailes, mot-symbole « captain » en minuscules épaisses, « TRADING » espacé */
+/* Marque Desk : tête + ailes, mot-symbole en minuscules épaisses, « TRADING » espacé */
 .mark{width:128px;height:40px;position:relative}
 .brand:not(.custom) .bt{display:none}
 .brand.custom .mark{width:40px;overflow:hidden}
@@ -2194,7 +2194,7 @@ CK.reduce = reduce;
 
 /* ---------------- Config ---------------- */
 var DEF = {
-  id:"captain", name:"captain", tagline:"Trading · Desk", data:"", accent:"#FF8A3D", theme:"dark", beginner:false,
+  id:"sei", name:"Sei\x27", tagline:"Trading · Desk", data:"", accent:"#FF8A3D", theme:"dark", beginner:false,
   watchlist:["BTC","ETH","SOL"],
   modules:{day:true,map:true,events:true,deriv:true,liq:true,movers:true,screener:true,news:true,levels:true,opts:true,book:true,corr:true,net:true,veille:true},
   layout:null,
@@ -2208,7 +2208,7 @@ function merge(a,b){var o={};Object.keys(a||{}).forEach(function(k){o[k]=clone(a
   Object.keys(b||{}).forEach(function(k){o[k]=isObj(b[k])&&isObj(o[k])?merge(o[k],b[k]):clone(b[k]);});return o;}
 var BAKED = merge(DEF, window.COCKPIT_CONFIG||{});
 if(BAKED.theme!=="light")BAKED.theme="dark";
-var NS = "cockpit:"+(BAKED.id||"captain")+":";
+var NS = "cockpit:"+(BAKED.id||"sei")+":";
 function ls(k,v){try{if(v===undefined)return localStorage.getItem(NS+k);if(v===null)localStorage.removeItem(NS+k);else localStorage.setItem(NS+k,v);}catch(e){return null;}}
 function lsj(k,v){if(v===undefined){try{return JSON.parse(ls(k));}catch(e){return null;}}ls(k,v===null?null:JSON.stringify(v));}
 var C = merge(BAKED, lsj("cfg")||{});
@@ -2308,7 +2308,7 @@ function setTheme(t,btn){
   else apply();
 }
 CK.setTheme=setTheme;
-/* Logo Captain Trading (fichier de la marque) : version fond sombre (mot-symbole blanc) et version fond clair (mot-symbole marine) */
+/* Logo Desk (fichier de la marque) : version fond sombre (mot-symbole blanc) et version fond clair (mot-symbole marine) */
 var LOGO = {
   dark: "",
   light: "",
@@ -2316,16 +2316,16 @@ var LOGO = {
 };
 function applyIdentity(){
   root.style.setProperty("--accent",C.accent||DEF.accent);
-  /* Anciennes configs « CAPTAIN / cockpit » → nouvelle marque */
-  /* Anciennes configs (CAPTAIN, COCKPIT, DESK) → marque Captain Trading */
-  var old=!C.name||/^(CAPTAIN|COCKPIT|DESK)$/.test(C.name),nm=old?"captain":C.name,tg=(old&&(C.tagline==null||C.tagline==="cockpit"||C.tagline==="Crypto · Macro"))?"Trading · Desk":C.tagline;
+  /* Anciennes configs « SEI / cockpit » → nouvelle marque */
+  /* Anciennes configs (SEI, COCKPIT, DESK) → marque Desk */
+  var old=!C.name||/^(SEI|COCKPIT|DESK)$/.test(C.name),nm=old?"SEI":C.name,tg=(old&&(C.tagline==null||C.tagline==="cockpit"||C.tagline==="Crypto · Macro"))?"Trading · Desk":C.tagline;
   C.name=nm;C.tagline=tg;
   $("bName").textContent=nm;$("bSub").textContent=tg;
-  document.title=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
-  $("footBrand").textContent=nm==="captain"?"Captain Trading · Desk":nm+" · Desk";
+  document.title=nm+" · Desk";
+  $("footBrand").textContent=nm+" · Desk";
   var mk=$("brandMark");if(!mk.firstChild)mk.innerHTML='';
-  /* le logo contient déjà « captain TRADING » : le texte ne s'affiche que pour un nom personnalisé */
-  document.querySelector(".brand").classList.toggle("custom",nm!=="captain");
+  /* le logo contient déjà « Desk » : le texte ne s'affiche que pour un nom personnalisé */
+  document.querySelector(".brand").classList.toggle("custom",nm!=="Sei\x27");
   var fav=document.querySelector('link[rel="icon"]');if(!fav){fav=document.createElement("link");fav.rel="icon";fav.type="image/png";fav.href=LOGO.fav;document.head.appendChild(fav);}
   document.body.classList.toggle("beginner",!!C.beginner);
   /* Un bloc disparaît aussi si son espace est décoché dans le Studio (ex. Screener) */
@@ -2759,7 +2759,7 @@ var WIRE={ts:0,tree:[],tg:[]};
 /* ---------- News Telegram (Walter Bloomberg, Watcher Guru, PhoenixNews, BWEnews, unfolded, Whale Alert) ----------
    Via le relais Cloudflare du Desk (relais/desk-news-worker.js), commun à tous les utilisateurs.
    Une seule requête par minute pour toutes les chaînes, seulement quand l'onglet est visible et dans un seul onglet. Vide = désactivé. */
-var TG_URL="https://desk-news.captainmanagement8.workers.dev";
+var TG_URL="https://seiturox.github.io/desk";
 function wireParse(a){var out=[],seen={};
   (Array.isArray(a)?a:[]).forEach(function(x){if(!x||!x.title||!x.time)return;var s=x.source||"",t=String(x.en||x.title).replace(/\s+/g," ").trim(),src="",keep=false,kind="tree",h="",nm="";
     if(s==="Twitter"){var m=t.match(/^(.{1,60}?) \(@([A-Za-z0-9_]+)\):\s*(.*)$/);if(!m)return;h=m[2];
@@ -2973,6 +2973,54 @@ CK.boot=function(){
 window.Cockpit={boot:function(){CK.boot();}};
 })();
 
+/* === PATCH KRAKEN XMR BANDEAU === */
+(function initKrakenXmrTicker() {
+  async function pollKrakenXmr() {
+    try {
+      const watched = (typeof watch === "function" ? watch() : []).map(s => String(s).toUpperCase());
+      if (!watched.includes("XMR")) return;
+
+      const res = await fetch("https://api.kraken.com/0/public/Ticker?pair=XMRUSD", { cache: "no-store" });
+      if (!res.ok) return;
+      const json = await res.json();
+      const pairData = json && json.result && (json.result.XXMRZUSD || json.result.XMRUSD || Object.values(json.result)[0]);
+      if (!pairData || !pairData.c || !pairData.o) return;
+
+      const last = parseFloat(pairData.c[0]);
+      const open24h = parseFloat(pairData.o);
+      const high24h = pairData.h ? parseFloat(pairData.h[1]) : last;
+      const low24h = pairData.l ? parseFloat(pairData.l[1]) : last;
+
+      if (!Number.isFinite(last) || last <= 0) return;
+
+      if (typeof onTickers === "function") {
+        onTickers([{
+          instId: "XMR-USDT",
+          last: String(last),
+          open24h: String(Number.isFinite(open24h) && open24h > 0 ? open24h : last),
+          high24h: String(high24h),
+          low24h: String(low24h),
+          ts: String(Date.now())
+        }]);
+      } else if (typeof S !== "undefined" && S.tick) {
+        S.tick["XMR-USDT"] = { last, open24h, high24h, low24h, ts: Date.now() };
+        if (typeof queueTicks === "function") queueTicks();
+      }
+    } catch (e) {
+      /* échec silencieux en cas de coupure réseau passagère */
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(pollKrakenXmr, 800);
+      setInterval(pollKrakenXmr, 15000);
+    });
+  } else {
+    setTimeout(pollKrakenXmr, 800);
+    setInterval(pollKrakenXmr, 15000);
+  }
+})();
 /* ================================================================
    COCKPIT — Fond : relief 3D tracé avec le vrai cours du BTC (200 jours)
    Fil de fer discret + courbe du prix. Dérive lente, suit la souris.
@@ -3027,7 +3075,7 @@ CK.bg={cam:function(y,z){yaw=y||0;zoom=z||0;},slow:function(v){slow=!!v;},tint:f
 },theme:function(){},rebuild:function(){}};
 })();
 
-/* ================================================================
+﻿/* ================================================================
    COCKPIT — Portes + agencement libre
    Un accueil (vue d'ensemble) et des « portes » plein écran : Screener,
    Liquidations, Macro, News. Chaque porte a sa propre grille de 12 colonnes :
@@ -3815,7 +3863,7 @@ CK.pos={
 };
 })();
 
-/* ================================================================
+﻿/* ================================================================
    DESK — Niveaux clés, options Deribit, carnet d'ordres agrégé,
    flashs FinancialJuice. Données réelles uniquement, sans clé.
    · Niveaux : bougies OKX (jour/semaine/mois en UTC, 15 min pour les
@@ -4352,7 +4400,7 @@ function renderStudio(){
 function segVal(id){var b=document.querySelector("#"+id+' [aria-pressed="true"]');return b?b.getAttribute("data-v"):"";}
 function readStudio(){
   var C=CK.merge(CK.cfg(),{}),v=function(id){return $(id).value;};
-  C.name=v("sName").trim()||"captain";C.tagline=v("sTag").trim();
+  C.name=v("sName").trim()||"sei";C.tagline=v("sTag").trim();
   C.theme=segVal("sTheme")||"dark";C.newsLang=segVal("sLang")||"fr";C.beginner=$("sBeg").checked;
   C.watchlist=v("sWatch").split(/[,\s;]+/).map(function(x){return x.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");}).filter(Boolean).slice(0,12);
   if(!C.watchlist.length)C.watchlist=["BTC","ETH","SOL"];
@@ -5001,7 +5049,7 @@ function lier(b,tf){var box=document.getElementById("chartBox");if(!box||box._g8
     if(e.target.closest("[data-g8pine]")){
       CK.ui.copy(PINE_AUTO).then(function(){CK.toast("<b>Indicateur « Niveaux Sei\' » copié.</b> À faire une seule fois sur TradingView : Éditeur Pine (en bas) → Ctrl+A puis Ctrl+V → Enregistrer → « Ajouter au graphique ». Mets-le en favori (étoile) : il calcule ensuite les niveaux tout seul, sur tous tes graphiques.",{ms:16000});},function(){CK.toast("Copie impossible dans ce navigateur.");});return;}
     var t=e.target.closest("[data-g8tf]");if(t&&GC0.b){grandChart(GC0.b,t.getAttribute("data-g8tf"));return;}if(e.target.closest("[data-g8off]")&&GC0.b){grandChart(GC0.b,V.gtf,!document.getElementById("g8tv"));}});}
-/* L'indicateur TradingView qui recalcule lui-même les niveaux du Desk (source : tradingview/niveaux-captain.pine) */
+/* L'indicateur TradingView qui recalcule lui-même les niveaux du Desk (source : tradingview/niveaux-desk.pine) */
 var PINE_AUTO="//@version=5\n// ============================================================================\n// Niveaux Sei\' · Desk Sei\'\n// Les mêmes niveaux que le Desk, calculés directement par TradingView :\n// semaine passée, jour (haut et bas d'hier, ouverture), POC (prix au plus gros\n// volume, jour et veille), sessions Asie / Londres / New York, sommets et creux 4 h et 1 h.\n// À ajouter UNE SEULE FOIS : ensuite il se met à jour tout seul, sur tous les graphiques.\n// Fonctionne sur les unités de temps intraday (1 min à 4 h). Heures des sessions en UTC, comme le Desk.\n// Lecture de marché, pas un conseil d'achat ou de vente.\n// ============================================================================\nindicator(\"Niveaux Sei\'\", overlay = true, max_lines_count = 80, max_labels_count = 80)\n\ngrpN = \"Niveaux affichés\"\nshowW   = input.bool(true,  \"Semaine : haut et bas de la semaine passée\", group = grpN)\nshowD   = input.bool(true,  \"Jour : haut et bas d'hier, ouverture du jour\", group = grpN)\nshowPOC = input.bool(true,  \"POC : prix au plus gros volume (jour et veille)\", group = grpN)\nshowS   = input.bool(true,  \"Sessions : Asie, Londres, New York\", group = grpN)\nshow4h  = input.bool(true,  \"Sommets et creux 4 h\", group = grpN)\nshow1h  = input.bool(false, \"Sommets et creux 1 h\", group = grpN)\ngrpR = \"Réglages\"\npocPct  = input.float(0.05, \"Finesse du POC (% du prix)\", minval = 0.01, step = 0.01, group = grpR)\ndecal   = input.int(12, \"Position des étiquettes (barres à droite)\", minval = 1, maxval = 300, group = grpR)\nplein   = input.bool(true, \"Lignes sur toute la largeur du graphique\", group = grpR)\n\n// Couleurs du Desk\ncW = color.rgb(195, 166, 255)\ncD = color.rgb(255, 194, 102)\ncP = color.rgb(95, 211, 230)\ncS = color.rgb(127, 168, 240)\nc4 = color.rgb(255, 159, 90)\nc1 = color.rgb(174, 179, 188)\n\n// ---------- Semaine et jour (bougies terminées, aucune valeur qui change après coup) ----------\n[dH, dL, dO] = request.security(syminfo.tickerid, \"D\", [high[1], low[1], open], lookahead = barmerge.lookahead_on)\n[wH, wL] = request.security(syminfo.tickerid, \"W\", [high[1], low[1]], lookahead = barmerge.lookahead_on)\n\n// ---------- Sommets et creux (2 bougies de chaque côté, comme le Desk) ----------\npivots() =>\n    ph = ta.pivothigh(high, 2, 2)\n    pl = ta.pivotlow(low, 2, 2)\n    [ta.valuewhen(not na(ph), ph, 0), ta.valuewhen(not na(ph), ph, 1), ta.valuewhen(not na(pl), pl, 0), ta.valuewhen(not na(pl), pl, 1)]\n[h4a, h4b, l4a, l4b] = request.security(syminfo.tickerid, \"240\", pivots())\n[h1a, h1b, l1a, l1b] = request.security(syminfo.tickerid, \"60\", pivots())\n\n// ---------- Sessions du jour (UTC) ----------\nnouveauJour = ta.change(time(\"D\")) != 0\ndans(s) => not na(time(timeframe.period, s + \":1234567\", \"UTC\"))\nvar float asH = na\nvar float asL = na\nvar float loH = na\nvar float loL = na\nvar float nyH = na\nvar float nyL = na\nif nouveauJour\n    asH := na\n    asL := na\n    loH := na\n    loL := na\n    nyH := na\n    nyL := na\nif timeframe.isintraday\n    if dans(\"0000-0700\")\n        asH := na(asH) ? high : math.max(asH, high)\n        asL := na(asL) ? low : math.min(asL, low)\n    if dans(\"0700-1330\")\n        loH := na(loH) ? high : math.max(loH, high)\n        loL := na(loL) ? low : math.min(loL, low)\n    if dans(\"1330-2000\")\n        nyH := na(nyH) ? high : math.max(nyH, high)\n        nyL := na(nyL) ? low : math.min(nyL, low)\n\n// ---------- POC : profil de volume du jour, mis à jour à chaque bougie ----------\nvar map<int, float> profil = map.new<int, float>()\nvar float pas = na\nvar int pocK = na\nvar float pocV = 0.0\nvar float pocJour = na\nvar float pocHier = na\nif nouveauJour or na(pas)\n    if nouveauJour and not na(pocJour)\n        pocHier := pocJour\n    profil.clear()\n    pas := open * pocPct / 100\n    pocK := na\n    pocV := 0.0\n    pocJour := na\nif timeframe.isintraday and not na(pas) and volume > 0\n    k = int(math.floor(hlc3 / pas))\n    v = nz(profil.get(k)) + volume\n    profil.put(k, v)\n    if v > pocV\n        pocV := v\n        pocK := k\n    pocJour := (pocK + 0.5) * pas\n\n// ---------- Dessin (refait à la dernière bougie) ----------\nvar array<line> lignes = array.new<line>()\nvar array<label> etiquettes = array.new<label>()\ntrace(float p, string nom, color c, bool pointille) =>\n    if not na(p)\n        lignes.push(line.new(bar_index - 1, p, bar_index, p, extend = plein ? extend.both : extend.right, color = color.new(c, 15), width = 1, style = pointille ? line.style_dashed : line.style_solid))\n        etiquettes.push(label.new(bar_index + decal, p, nom + \"  \" + str.tostring(p, format.mintick), style = label.style_label_left, color = color.new(c, 82), textcolor = c, size = size.small))\n\nif barstate.islast\n    for l in lignes\n        line.delete(l)\n    for e in etiquettes\n        label.delete(e)\n    lignes.clear()\n    etiquettes.clear()\n    if showW\n        trace(wH, \"Haut sem. passée\", cW, false)\n        trace(wL, \"Bas sem. passée\", cW, false)\n    if showD\n        trace(dH, \"Haut d'hier\", cD, false)\n        trace(dL, \"Bas d'hier\", cD, false)\n        trace(dO, \"Ouv. du jour\", cD, true)\n    if showPOC and timeframe.isintraday\n        trace(pocJour, \"POC du jour\", cP, false)\n        trace(pocHier, \"POC d'hier\", cP, true)\n    if showS and timeframe.isintraday\n        trace(asH, \"Haut Asie\", cS, true)\n        trace(asL, \"Bas Asie\", cS, true)\n        trace(loH, \"Haut Londres\", cS, true)\n        trace(loL, \"Bas Londres\", cS, true)\n        trace(nyH, \"Haut New York\", cS, true)\n        trace(nyL, \"Bas New York\", cS, true)\n    if show4h\n        trace(h4a, \"Sommet 4h\", c4, false)\n        trace(h4b, \"Sommet 4h\", c4, false)\n        trace(l4a, \"Creux 4h\", c4, false)\n        trace(l4b, \"Creux 4h\", c4, false)\n    if show1h\n        trace(h1a, \"Sommet 1h\", c1, true)\n        trace(h1b, \"Sommet 1h\", c1, true)\n        trace(l1a, \"Creux 1h\", c1, true)\n        trace(l1b, \"Creux 1h\", c1, true)\n";
 var GC0={b:""};
 function legende(L,px){var h="",mis=false;L.slice().sort(function(x,y){return y.prix-x.prix;}).forEach(function(l){if(!mis&&l.prix<=px){h+='<div class="g8-now"><span>prix</span><b class="num">'+fp(px)+'</b></div>';mis=true;}var u=String(l.unite).toLowerCase();h+='<div class="g8-l" style="--u:'+(UCOL[u]||"#AEB3BC")+'"><i></i><b class="num">'+fp(l.prix)+'</b><span>'+esc(nom(l.nom))+'</span><em>'+(UNOM[u]||u.toUpperCase())+'</em><small class="num '+cl(-l.distance_pct)+'">'+sgn(l.distance_pct,2)+' %</small></div>';});if(!mis)h+='<div class="g8-now"><span>prix</span><b class="num">'+fp(px)+'</b></div>';return h;}
@@ -5817,7 +5865,7 @@ CK.sound={
   <div class="brand">
     <span class="mark" id="brandMark" aria-hidden="true"></span>
     <div class="bt">
-      <div class="bname" id="bName">captain</div>
+      <div class="bname" id="bName">Sei\x27</div>
       <div class="bsub" id="bSub">Trading · Desk</div>
     </div>
   </div>
@@ -5835,7 +5883,7 @@ CK.sound={
     <button type="button" class="btn icon" id="btnCalc" title="Calculateur de position" aria-label="Calculateur de position"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7M8.5 12h1M12 12h1M15.5 12h0M8.5 16h1M12 16h1M15.5 16h0"/></svg></button>
     <button type="button" class="btn icon kbd" id="btnPalette" title="Commandes (Ctrl+K)" aria-label="Commandes">⌘K</button>
     
-    <button type="button" class="btn primary" id="btnStudio">Studio</button>
+    <button type="button" class="btn primary" id="btnStudio">Paramètres</button>
   </div>
 </header>
 
@@ -5993,7 +6041,7 @@ CK.sound={
 
 <div class="ov" id="ovStudio" hidden>
   <div class="modal side" role="dialog" aria-modal="true" aria-labelledby="studioTitle">
-    <div class="mh"><h3 id="studioTitle">Studio</h3><button type="button" class="x" data-close aria-label="Fermer">×</button></div>
+    <div class="mh"><h3 id="studioTitle">Paramètres</h3><button type="button" class="x" data-close aria-label="Fermer">×</button></div>
     <div class="mb" id="studioBody"></div>
     <div class="mf">
       <button type="button" class="btn" id="stReset">Réinitialiser</button>

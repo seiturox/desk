@@ -791,3 +791,52 @@ CK.boot=function(){
 };
 window.Cockpit={boot:function(){CK.boot();}};
 })();
+
+/* === PATCH KRAKEN XMR BANDEAU === */
+(function initKrakenXmrTicker() {
+  async function pollKrakenXmr() {
+    try {
+      const watched = (typeof watch === "function" ? watch() : []).map(s => String(s).toUpperCase());
+      if (!watched.includes("XMR")) return;
+
+      const res = await fetch("https://api.kraken.com/0/public/Ticker?pair=XMRUSD", { cache: "no-store" });
+      if (!res.ok) return;
+      const json = await res.json();
+      const pairData = json && json.result && (json.result.XXMRZUSD || json.result.XMRUSD || Object.values(json.result)[0]);
+      if (!pairData || !pairData.c || !pairData.o) return;
+
+      const last = parseFloat(pairData.c[0]);
+      const open24h = parseFloat(pairData.o);
+      const high24h = pairData.h ? parseFloat(pairData.h[1]) : last;
+      const low24h = pairData.l ? parseFloat(pairData.l[1]) : last;
+
+      if (!Number.isFinite(last) || last <= 0) return;
+
+      if (typeof onTickers === "function") {
+        onTickers([{
+          instId: "XMR-USDT",
+          last: String(last),
+          open24h: String(Number.isFinite(open24h) && open24h > 0 ? open24h : last),
+          high24h: String(high24h),
+          low24h: String(low24h),
+          ts: String(Date.now())
+        }]);
+      } else if (typeof S !== "undefined" && S.tick) {
+        S.tick["XMR-USDT"] = { last, open24h, high24h, low24h, ts: Date.now() };
+        if (typeof queueTicks === "function") queueTicks();
+      }
+    } catch (e) {
+      /* échec silencieux en cas de coupure réseau passagère */
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      setTimeout(pollKrakenXmr, 800);
+      setInterval(pollKrakenXmr, 15000);
+    });
+  } else {
+    setTimeout(pollKrakenXmr, 800);
+    setInterval(pollKrakenXmr, 15000);
+  }
+})();
