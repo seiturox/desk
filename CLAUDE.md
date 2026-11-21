@@ -38,7 +38,7 @@ Un petit robot GitHub (`robot.mjs`) publie toutes les 10 minutes ce que le navig
 | `net.js` | Espace « Connexions » : état en direct de chaque source (liste `SRC`). |
 | `veille.js` | **L'espace « Agent »** : affichage de la lecture du marché écrite par l'agent (`lectureHTML`, `actifCol`, `jauge`, `etat`), mise à jour en direct (`majLive`), lectures précédentes (`histo`), onglets Bilan (`viewBilan`) et Conso IA (`viewConso`), cartes BTC/ETH/SOL/dollar avec graphiques et niveaux (`card`, `cardUSD`, `niveaux`), indicateur TradingView (`PINE_AUTO`). |
 | `desk-news-worker.js` | **Le relais Cloudflare** (code de l'agent et des news Telegram). Il ne tourne pas dans le navigateur : il se déploie sur Cloudflare Workers (voir plus bas). Aucune clé dedans : elles sont des secrets Cloudflare. |
-| `niveaux-captain.pine` | L'indicateur TradingView « Niveaux Captain » (Pine v5), copié par le bouton « Indicateur TradingView » du Desk. |
+| `niveaux-desk.pine` | L'indicateur TradingView « Niveaux Desk » (Pine v5), copié par le bouton « Indicateur TradingView » du Desk. |
 | `agent-manuel.md` | Ancien manuel de l'agent, **plus utilisé** (l'agent actuel a sa méthode dans le relais). Ne pas le modifier. |
 | `sound.js` | Ambiances sonores et sons d'interface. |
 | `bg.js` | Fond animé. |

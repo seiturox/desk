@@ -1,11 +1,11 @@
-﻿# Desk · Desk
+﻿# Sei' · Desk
 
 Un terminal de trading crypto et macro, gratuit, dans ton navigateur : sessions et annonces de la journée, signaux, carte des liquidations, screener, carnet d'ordres agrégé, news et tweets à la minute traduits en français (Trump sur Truth Social, comptes qui pistent les baleines…), et **un agent IA qui lit le marché toutes les 30 min** avec ses niveaux et son bilan.
 
 ## 👉 [Ouvrir le Desk](https://seiturox.github.io/desk/)
 
 Gratuit · sans inscription · sur ordinateur et téléphone.
-Le guide complet, le fichier à télécharger et les tutos vidéo : **[captain-trading.com/ia-trading](https://captain-trading.com/ia-trading)**
+Le guide complet, le fichier à télécharger et les tutos vidéo : **[seiturox.github.io/desk/)**
 
 ---
 
@@ -46,7 +46,7 @@ Ensuite, demande ce que tu veux : « Passe toute l'interface en violet », « Aj
 | `serve.mjs` | Aperçu local : `node serve.mjs` puis http://localhost:5173 |
 | `robot.mjs` | Le robot (toutes les 10 min) : agenda, news crypto traduites, copie de FinancialJuice |
 | `desk-news-worker.js` | Le relais Cloudflare : l'agent IA et les news Telegram (pour avoir ton propre agent, voir `CLAUDE.md`) |
-| `niveaux-captain.pine` | L'indicateur TradingView « Niveaux Captain » (aussi copiable depuis le Desk) |
+| `niveaux-desk.pine` | L'indicateur TradingView « Niveaux Desk » (aussi copiable depuis le Desk) |
 | `CLAUDE.md` | Le guide du projet pour l'IA |
 
 **Mettre ta version en ligne :** crée un dépôt public sur ton GitHub, **Settings → Pages → Source : GitHub Actions**, dépose tous les fichiers (**Add file → Upload files**), puis crée le robot avec **Add file → Create new file**, nom `.github/workflows/desk.yml`, en collant le contenu du fichier du même nom. Ton Desk sera sur `https://TON-PSEUDO.github.io/NOM-DU-DEPOT`.
