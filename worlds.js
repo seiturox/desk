@@ -10,6 +10,7 @@
 (function(){
 "use strict";
 var CK=window.CK,u=CK.u,esc=u.esc;
+var CHART_MAP={XMR:"KUCOIN:XMRUSDT"};
 var W0=[
   {v:"journee",name:"Journée",key:"1",col:"#E9C46A",desc:"Sessions, annonces et dérivés : où en est la journée."},
   {v:"macro",name:"Signaux",key:"2",col:"#7FA8F0",desc:"Dix indicateurs, une direction chacun, avec la preuve."},
@@ -233,7 +234,7 @@ function showTip(n,x,y){
 function hideTip(){if(!tip)return;tip.classList.remove("on");tip._n=null;}
 function act(a){
   if(!a)return;var k=a.slice(0,a.indexOf(":")),v=a.slice(a.indexOf(":")+1);
-  if(k==="chart"&&CK.openChart)CK.openChart("OKX:"+v+"USDT.P",v);
+  if(k==="chart"&&CK.openChart){var sym=CHART_MAP[v]||("OKX:"+v+"USDT.P");CK.openChart(sym,v);}
   else if(k==="link")window.open(v,"_blank","noopener");
   else if(k==="net"){enter(5);}
   else if(k==="sig"){enter(1);setTimeout(function(){var el=document.querySelector('#sigList .sg[data-k="'+v+'"]');if(el)el.click();},700);}
@@ -241,8 +242,8 @@ function act(a){
 
 /* ---------- Chiffres qui défilent jusqu'à leur valeur ---------- */
 function countUp(el){
-  if(reduce)return;var txt=el.textContent,m=txt.match(/^([^\d−-]*)([−-]?[\d\s ]*\d)(?:,(\d+))?(.*)$/);if(!m||/:/.test(txt))return;
-  var dec=m[3]?m[3].length:0,target=parseFloat((m[2].replace(/[\s ]/g,"").replace("−","-"))+(m[3]?"."+m[3]:""));if(!isFinite(target))return;
+  if(reduce)return;var txt=el.textContent,m=txt.match(/^([^\d−-]*)([−-]?[\d\s ]*\d)(?:,(\d+))?(.*)$/);if(!m||/:/.test(txt))return;
+  var dec=m[3]?m[3].length:0,target=parseFloat((m[2].replace(/[\s ]/g,"").replace("−","-"))+(m[3]?"."+m[3]:""));if(!isFinite(target))return;
   var t0=performance.now(),dur=750,fmt=function(v){return m[1]+v.toLocaleString("fr-FR",{minimumFractionDigits:dec,maximumFractionDigits:dec})+m[4];};
   (function step(now){var k=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(target*e);if(k<1)requestAnimationFrame(step);else el.textContent=txt;})(t0);
 }
