@@ -2953,8 +2953,9 @@ var tvP=null;
 function loadTV(){if(window.TradingView)return Promise.resolve();if(tvP)return tvP;tvP=new Promise(function(res,rej){var s=document.createElement("script");s.src="https://s3.tradingview.com/tv.js";var t0=performance.now();s.onload=function(){netOk(s.src,t0);res();};s.onerror=function(){tvP=null;rej();};document.head.appendChild(s);});return tvP;}
 /* Le widget gratuit refuse certains symboles (« disponible uniquement sur TradingView ») :
    on affiche un équivalent qui suit le même marché ; le lien TradingView garde le symbole d'origine. */
-var EMBED={"TVC:US10Y":"FRED:DGS10","TVC:DXY":"CAPITALCOM:DXY","TVC:VIX":"CAPITALCOM:VIX","NASDAQ:NDX":"CAPITALCOM:US100","SP:SPX":"CAPITALCOM:US500","CBOT:ZN1!":"OANDA:USB10YUSD"};
+var EMBED={"TVC:US10Y":"FRED:DGS10","TVC:DXY":"CAPITALCOM:DXY","TVC:VIX":"CAPITALCOM:VIX","NASDAQ:NDX":"CAPITALCOM:US100","SP:SPX":"CAPITALCOM:US500","CBOT:ZN1!":"OANDA:USB10YUSD","OKX:XMRUSDT.P":"KUCOIN:XMRUSDT","OKX:XMRUSDT":"KUCOIN:XMRUSDT"};
 function openChart(sym,title){
+  if(title==="XMR"||/^OKX:XMRUSDT/i.test(sym)){sym="KUCOIN:XMRUSDT";}
   var show=EMBED[sym]||sym;
   $("chartTitle").textContent=(title||sym)+" · "+show;$("chartLink").href="https://www.tradingview.com/chart/?symbol="+encodeURIComponent(sym);
   openOv("ovChart");var box=$("chartBox");box.innerHTML='<div class="empty">Chargement du graphique…</div>';
@@ -3020,7 +3021,6 @@ CK.boot=function(){
 };
 window.Cockpit={boot:function(){CK.boot();}};
 })();
-
 /* ================================================================
    COCKPIT — Fond : relief 3D tracé avec le vrai cours du BTC (200 jours)
    Fil de fer discret + courbe du prix. Dérive lente, suit la souris.
