@@ -2990,12 +2990,117 @@ function wire(){
   var spot=null;document.addEventListener("pointermove",function(e){var c=e.target.closest&&e.target.closest(".card");if(!c)return;if(spot)return;spot=requestAnimationFrame(function(){spot=null;var r=c.getBoundingClientRect();c.style.setProperty("--mx",(e.clientX-r.left)+"px");c.style.setProperty("--my",(e.clientY-r.top)+"px");});},{passive:true});
 }
 
+/* ---------------- Recherche rapide de graphiques TradingView (barre du haut) ---------------- */
+var TV_SUGGESTIONS = [
+  { label: "S&P 500 (US500)", sym: "SP:SPX", tag: "Indice" },
+  { label: "Nasdaq 100 (US100)", sym: "NASDAQ:NDX", tag: "Indice" },
+  { label: "Dow Jones (US30)", sym: "DJ:DJI", tag: "Indice" },
+  { label: "Dollar Index (DXY)", sym: "TVC:DXY", tag: "Macro" },
+  { label: "Taux US 10 ans", sym: "TVC:US10Y", tag: "Taux" },
+  { label: "Volatilité VIX", sym: "TVC:VIX", tag: "Volatilité" },
+  { label: "Or (GOLD)", sym: "TVC:GOLD", tag: "Matière première" },
+  { label: "Bitcoin (BTCUSDT)", sym: "OKX:BTCUSDT", tag: "Crypto" },
+  { label: "Ethereum (ETHUSDT)", sym: "OKX:ETHUSDT", tag: "Crypto" },
+  { label: "Solana (SOLUSDT)", sym: "OKX:SOLUSDT", tag: "Crypto" },
+  { label: "Monero (XMRUSDT)", sym: "KUCOIN:XMRUSDT", tag: "Crypto" },
+  { label: "Hyperliquid (HYPEUSDT)", sym: "OKX:HYPEUSDT", tag: "Crypto" }
+];
+
+function mountHeaderChartSearch(){
+  var header = document.querySelector("header.top, .top");
+  if (!header || document.getElementById("tvQuickSearchWrap")) return;
+
+  /* Cible la pastille centrale "TOKYO OUVERT..." si présente */
+  var pill = [].slice.call(header.querySelectorAll("div, span, button, a")).find(function(el){
+    return el.children.length === 0 && /TOKYO|LONDRES|NEW YORK|OUVERT|FERM/i.test((el.textContent || "").trim());
+  });
+  var hostTarget = (pill && pill.parentElement && pill.parentElement !== header) ? pill.parentElement : pill;
+
+  var style = document.createElement("style");
+  style.textContent = [
+    ".tv-qs-wrap{position:relative;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);transition:border-color .15s,background .15s}",
+    ".tv-qs-wrap:focus-within{border-color:var(--accent,#FF8A3D);background:rgba(255,255,255,.08)}",
+    ".tv-qs-ic{width:13px;height:13px;opacity:.75;flex:0 0 auto;color:var(--accent,#FF8A3D)}",
+    ".tv-qs-in{width:155px;border:0;background:transparent;color:inherit;font:inherit;font-size:12px;outline:none}",
+    ".tv-qs-in::placeholder{opacity:.55}",
+    ".tv-qs-drop{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);width:270px;max-height:260px;overflow:auto;z-index:999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 28px rgba(0,0,0,.55);padding:4px}",
+    ".tv-qs-item{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:inherit;text-align:left;font-size:12px;cursor:pointer}",
+    ".tv-qs-item:hover,.tv-qs-item.active{background:rgba(255,138,61,.16)}",
+    ".tv-qs-tag{font-size:10px;opacity:.65;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.08)}"
+  ].join("");
+  document.head.appendChild(style);
+
+  var wrap = document.createElement("div");
+  wrap.id = "tvQuickSearchWrap";
+  wrap.className = "tv-qs-wrap";
+  wrap.innerHTML =
+    '<svg class="tv-qs-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+    '<input id="tvQuickInput" class="tv-qs-in" type="text" autocomplete="off" spellcheck="false" placeholder="Indice ou chart TV…" aria-label="Rechercher un graphique TradingView">' +
+    '<div id="tvQuickDrop" class="tv-qs-drop" hidden></div>';
+
+  if (hostTarget && hostTarget.parentNode) {
+    hostTarget.parentNode.replaceChild(wrap, hostTarget);
+  } else {
+    header.appendChild(wrap);
+  }
+
+  var inp = document.getElementById("tvQuickInput");
+  var drop = document.getElementById("tvQuickDrop");
+  var currentList = [];
+
+  function pickChart(item) {
+    if (!item || !CK.openChart) return;
+    drop.hidden = true;
+    inp.value = "";
+    CK.openChart(item.sym, item.label);
+  }
+
+  function renderDrop(q) {
+    var s = String(q || "").trim().toUpperCase();
+    var matches = TV_SUGGESTIONS.filter(function(it){
+      return !s || it.label.toUpperCase().indexOf(s) >= 0 || it.sym.toUpperCase().indexOf(s) >= 0 || it.tag.toUpperCase().indexOf(s) >= 0;
+    });
+    if (s) {
+      var customSym = s.indexOf(":") >= 0 ? s : ("OKX:" + s.replace(/[^A-Z0-9._-]/g, "") + (s.endsWith("USDT") || s.endsWith("USD") ? "" : "USDT"));
+      matches.unshift({ label: s, sym: customSym, tag: "Ouvrir TV" });
+    }
+    currentList = matches.slice(0, 8);
+    if (!currentList.length) { drop.hidden = true; return; }
+    drop.innerHTML = currentList.map(function(it, idx){
+      return '<button type="button" class="tv-qs-item' + (idx === 0 ? ' active' : '') + '" data-i="' + idx + '">' +
+        '<span>' + esc(it.label) + '</span><span class="tv-qs-tag">' + esc(it.tag) + '</span></button>';
+    }).join("");
+    drop.hidden = false;
+  }
+
+  inp.addEventListener("focus", function(){ renderDrop(inp.value); });
+  inp.addEventListener("input", function(){ renderDrop(inp.value); });
+  inp.addEventListener("keydown", function(e){
+    if (e.key === "Escape") { drop.hidden = true; inp.blur(); return; }
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (!currentList.length) renderDrop(inp.value);
+      if (currentList[0]) pickChart(currentList[0]);
+    }
+  });
+  drop.addEventListener("mousedown", function(e){
+    var btn = e.target.closest(".tv-qs-item");
+    if (!btn) return;
+    e.preventDefault();
+    pickChart(currentList[+btn.getAttribute("data-i")]);
+  });
+  document.addEventListener("click", function(e){
+    if (!wrap.contains(e.target)) drop.hidden = true;
+  });
+}
+
 /* ---------------- Démarrage ---------------- */
 function safe(fn){try{fn();}catch(e){if(window.console)console.error("[cockpit]",e);}}
 CK.boot=function(){
   applyIdentity();syncThemeBtns();buildStrip();wire();
   S.moversMkt=C.moversMarket;S.newsLang=C.newsLang;
   [function(){if(CK.bg)CK.bg.boot();},function(){if(CK.layout)CK.layout.boot();},function(){if(CK.day)CK.day.boot();},function(){if(CK.map)CK.map.boot();},function(){if(CK.liqmap)CK.liqmap.boot();},function(){if(CK.pos)CK.pos.boot();},function(){if(CK.extra)CK.extra.boot();},function(){if(CK.veille)CK.veille.boot();},function(){if(CK.screener)CK.screener.boot();},function(){if(CK.ui)CK.ui.boot();},function(){if(CK.hub)CK.hub.boot();},function(){if(CK.worlds)CK.worlds.boot();},function(){if(CK.sound)CK.sound.boot();},function(){if(CK.net)CK.net.boot();}].forEach(safe);
+  mountHeaderChartSearch();
   renderLiqSum();renderNews();
   loadInstruments().then(function(){startSockets();seedLiq();});
   loadMacro();
