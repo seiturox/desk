@@ -3023,7 +3023,7 @@ function mountHeaderChartSearch(){
     ".tv-qs-ic{width:13px;height:13px;opacity:.75;flex:0 0 auto;color:var(--accent,#FF8A3D)}",
     ".tv-qs-in{width:155px;border:0;background:transparent;color:inherit;font:inherit;font-size:12px;outline:none}",
     ".tv-qs-in::placeholder{opacity:.55}",
-    ".tv-qs-drop{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);width:270px;max-height:260px;overflow:auto;z-index:999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 28px rgba(0,0,0,.55);padding:4px}",
+    ".tv-qs-drop{position:fixed;min-width:260px;max-width:320px;max-height:260px;overflow:auto;z-index:9999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 28px rgba(0,0,0,.55);padding:4px}",
     ".tv-qs-item{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:inherit;text-align:left;font-size:12px;cursor:pointer}",
     ".tv-qs-item:hover,.tv-qs-item.active{background:rgba(255,138,61,.16)}",
     ".tv-qs-tag{font-size:10px;opacity:.65;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.08)}"
@@ -3035,8 +3035,13 @@ function mountHeaderChartSearch(){
   wrap.className = "tv-qs-wrap";
   wrap.innerHTML =
     '<svg class="tv-qs-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-    '<input id="tvQuickInput" class="tv-qs-in" type="text" autocomplete="off" spellcheck="false" placeholder="Indice ou chart TV…" aria-label="Rechercher un graphique TradingView">' +
-    '<div id="tvQuickDrop" class="tv-qs-drop" hidden></div>';
+    '<input id="tvQuickInput" class="tv-qs-in" type="text" autocomplete="off" spellcheck="false" placeholder="Indice ou chart TV…" aria-label="Rechercher un graphique TradingView">';
+
+  var drop = document.createElement("div");
+  drop.id = "tvQuickDrop";
+  drop.className = "tv-qs-drop";
+  drop.hidden = true;
+  document.body.appendChild(drop);
 
   if (hostTarget && hostTarget.parentNode) {
     hostTarget.parentNode.replaceChild(wrap, hostTarget);
@@ -3045,8 +3050,18 @@ function mountHeaderChartSearch(){
   }
 
   var inp = document.getElementById("tvQuickInput");
-  var drop = document.getElementById("tvQuickDrop");
   var currentList = [];
+
+  function placeDrop() {
+    var r = wrap.getBoundingClientRect();
+    var w = Math.max(260, Math.min(320, r.width + 80));
+    var left = Math.round(r.left + r.width / 2 - w / 2);
+    left = Math.max(8, Math.min(window.innerWidth - w - 8, left));
+    drop.style.width = w + "px";
+    drop.style.left = left + "px";
+    drop.style.top = Math.round(r.bottom + 6) + "px";
+    drop.style.transform = "none";
+  }
 
   function pickChart(item) {
     if (!item || !CK.openChart) return;
@@ -3071,6 +3086,7 @@ function mountHeaderChartSearch(){
         '<span>' + esc(it.label) + '</span><span class="tv-qs-tag">' + esc(it.tag) + '</span></button>';
     }).join("");
     drop.hidden = false;
+    placeDrop();
   }
 
   inp.addEventListener("focus", function(){ renderDrop(inp.value); });
@@ -3089,8 +3105,9 @@ function mountHeaderChartSearch(){
     e.preventDefault();
     pickChart(currentList[+btn.getAttribute("data-i")]);
   });
+  window.addEventListener("resize", function(){ if (!drop.hidden) placeDrop(); });
   document.addEventListener("click", function(e){
-    if (!wrap.contains(e.target)) drop.hidden = true;
+    if (!wrap.contains(e.target) && !drop.contains(e.target)) drop.hidden = true;
   });
 }
 
