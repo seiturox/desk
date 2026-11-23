@@ -3018,15 +3018,15 @@ function mountHeaderChartSearch(){
 
   var style = document.createElement("style");
   style.textContent = [
-    ".tv-qs-wrap{position:relative;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);transition:border-color .15s,background .15s}",
-    ".tv-qs-wrap:focus-within{border-color:var(--accent,#FF8A3D);background:rgba(255,255,255,.08)}",
-    ".tv-qs-ic{width:13px;height:13px;opacity:.75;flex:0 0 auto;color:var(--accent,#FF8A3D)}",
-    ".tv-qs-in{width:155px;border:0;background:transparent;color:inherit;font:inherit;font-size:12px;outline:none}",
+    ".tv-qs-wrap{position:relative;display:inline-flex;align-items:center;justify-content:flex-start;gap:7px;height:30px;width:195px;padding:0 11px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-sizing:border-box;transition:border-color .15s,background .15s}",
+    ".tv-qs-wrap:focus-within{border-color:var(--accent,#FF8A3D);background:rgba(255,255,255,.09)}",
+    ".tv-qs-ic{width:13px;height:13px;opacity:.78;flex:0 0 auto;color:var(--accent,#FF8A3D)}",
+    ".tv-qs-in{flex:1;min-width:0;width:100%;border:0;background:transparent;color:inherit;font:inherit;font-size:12px;line-height:1.2;outline:none;padding:0;margin:0}",
     ".tv-qs-in::placeholder{opacity:.55}",
-    ".tv-qs-drop{position:fixed;min-width:260px;max-width:320px;max-height:260px;overflow:auto;z-index:9999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 28px rgba(0,0,0,.55);padding:4px}",
-    ".tv-qs-item{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:inherit;text-align:left;font-size:12px;cursor:pointer}",
-    ".tv-qs-item:hover,.tv-qs-item.active{background:rgba(255,138,61,.16)}",
-    ".tv-qs-tag{font-size:10px;opacity:.65;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.08)}"
+    ".tv-qs-drop{position:fixed;min-width:290px;max-width:340px;max-height:280px;overflow:auto;z-index:9999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.16);box-shadow:0 12px 28px rgba(0,0,0,.6);padding:6px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}",
+    ".tv-qs-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:8px 10px;border:0;border-radius:7px;background:transparent;color:#eef2f7;text-align:left;font-size:12.5px;font-weight:500;cursor:pointer}",
+    ".tv-qs-item:hover,.tv-qs-item.active{background:rgba(255,138,61,.18)}",
+    ".tv-qs-tag{flex:0 0 auto;font-size:10.5px;font-weight:500;opacity:.75;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.09)}"
   ].join("");
   document.head.appendChild(style);
 
@@ -3054,7 +3054,7 @@ function mountHeaderChartSearch(){
 
   function placeDrop() {
     var r = wrap.getBoundingClientRect();
-    var w = Math.max(260, Math.min(320, r.width + 80));
+    var w = Math.max(290, Math.min(340, r.width + 110));
     var left = Math.round(r.left + r.width / 2 - w / 2);
     left = Math.max(8, Math.min(window.innerWidth - w - 8, left));
     drop.style.width = w + "px";
