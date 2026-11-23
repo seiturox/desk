@@ -173,7 +173,7 @@ function paintTicks(){
 /* Chiffres qui défilent comme un compteur mécanique */
 function roll(el,txt,up){var old=el.getAttribute("data-v")||"";if(old===txt)return;el.setAttribute("data-v",txt);
   if(reduce||!old||old.length!==txt.length){el.textContent=txt;return;}
-  el.innerHTML=txt.split("").map(function(ch){return '<span class="d">'+(ch===" "||ch===" "?"&nbsp;":esc(ch))+'</span>';}).join("");
+  el.innerHTML=txt.split("").map(function(ch){return '<span class="d">'+(ch===" "||ch==="\u00A0"?"&nbsp;":esc(ch))+'</span>';}).join("");
   [].forEach.call(el.children,function(s,i){if(txt[i]!==old[i]&&s.animate)s.animate([{transform:"translateY("+(up?"70%":"-70%")+")",opacity:0},{transform:"none",opacity:1}],{duration:280,easing:"cubic-bezier(.23,1,.32,1)"});});}
 CK.roll=roll;
 var tickQueued=false;
@@ -198,7 +198,8 @@ setTimeout(function(){
       S.tick["XMR-USDT"]={last:+d.c[0],open:+d.o,open24h:+d.o,chg:(+d.o>0?(+d.c[0]/+d.o-1)*100:0),high24h:+(d.h?d.h[1]:d.c[0]),low24h:+(d.l?d.l[1]:d.c[0]),ts:Date.now()};
       queueTicks();
     }).catch(function(){});
-},500);function queueTicks(){if(tickQueued)return;tickQueued=true;setTimeout(function(){tickQueued=false;paintTicks();if(CK.liqmap)CK.liqmap.price();},300);}
+},500);
+function queueTicks(){if(tickQueued)return;tickQueued=true;setTimeout(function(){tickQueued=false;paintTicks();if(CK.liqmap)CK.liqmap.price();},300);}
 function paintMacroStrip(){
   MACRO_STRIP.forEach(function(m){var d=S.mk[m.k];var pe=document.querySelector('[data-mp="'+m.k+'"]'),ce=document.querySelector('[data-mc="'+m.k+'"]');if(!d||!pe)return;
     if(m.k==="US10Y"){pe.textContent=nf(d.c,3)+" %";var bp=d.c-d.c/(1+(d.ch||0)/100);ce.textContent=(bp>=0?"+":"−")+nf(Math.abs(bp*100),1)+" pb";ce.className="c "+cls(bp);}
@@ -799,60 +800,30 @@ var TV_SUGGESTIONS = [
 ];
 
 function mountHeaderChartSearch(){
-  var header = document.querySelector("header.top, .top");
-  if (!header || document.getElementById("tvQuickSearchWrap")) return;
+  var wrap = document.getElementById("tvQuickSearchWrap");
+  var inp = document.getElementById("tvQuickInput");
+  if (!wrap || !inp || wrap.dataset.wired) return;
+  wrap.dataset.wired = "1";
 
-  /* Cible la pastille centrale "TOKYO OUVERT..." si présente */
-  var pill = [].slice.call(header.querySelectorAll("div, span, button, a")).find(function(el){
-    return el.children.length === 0 && /TOKYO|LONDRES|NEW YORK|OUVERT|FERM/i.test((el.textContent || "").trim());
-  });
-  var hostTarget = (pill && pill.parentElement && pill.parentElement !== header) ? pill.parentElement : pill;
-
-  var style = document.createElement("style");
-  style.textContent = [
-    ".tv-qs-wrap{position:relative;display:inline-flex;align-items:center;justify-content:flex-start;gap:7px;height:30px;width:195px;padding:0 11px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-sizing:border-box;transition:border-color .15s,background .15s}",
-    ".tv-qs-wrap:focus-within{border-color:var(--accent,#FF8A3D);background:rgba(255,255,255,.09)}",
-    ".tv-qs-ic{width:13px;height:13px;opacity:.78;flex:0 0 auto;color:var(--accent,#FF8A3D)}",
-    ".tv-qs-in{flex:1;min-width:0;width:100%;border:0;background:transparent;color:inherit;font:inherit;font-size:12px;line-height:1.2;outline:none;padding:0;margin:0}",
-    ".tv-qs-in::placeholder{opacity:.55}",
-    ".tv-qs-drop{position:fixed;min-width:290px;max-width:340px;max-height:280px;overflow:auto;z-index:9999;border-radius:10px;background:#12161f;border:1px solid rgba(255,255,255,.16);box-shadow:0 12px 28px rgba(0,0,0,.6);padding:6px;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}",
-    ".tv-qs-item{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:8px 10px;border:0;border-radius:7px;background:transparent;color:#eef2f7;text-align:left;font-size:12.5px;font-weight:500;cursor:pointer}",
-    ".tv-qs-item:hover,.tv-qs-item.active{background:rgba(255,138,61,.18)}",
-    ".tv-qs-tag{flex:0 0 auto;font-size:10.5px;font-weight:500;opacity:.75;padding:2px 7px;border-radius:999px;background:rgba(255,255,255,.09)}"
-  ].join("");
-  document.head.appendChild(style);
-
-  var wrap = document.createElement("div");
-  wrap.id = "tvQuickSearchWrap";
-  wrap.className = "tv-qs-wrap";
-  wrap.innerHTML =
-    '<svg class="tv-qs-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-    '<input id="tvQuickInput" class="tv-qs-in" type="text" autocomplete="off" spellcheck="false" placeholder="Indice ou chart TV…" aria-label="Rechercher un graphique TradingView">';
-
-  var drop = document.createElement("div");
-  drop.id = "tvQuickDrop";
-  drop.className = "tv-qs-drop";
-  drop.hidden = true;
-  document.body.appendChild(drop);
-
-  if (hostTarget && hostTarget.parentNode) {
-    hostTarget.parentNode.replaceChild(wrap, hostTarget);
-  } else {
-    header.appendChild(wrap);
+  var drop = document.getElementById("tvQuickDrop");
+  if (!drop) {
+    drop = document.createElement("div");
+    drop.id = "tvQuickDrop";
+    drop.className = "tv-qs-drop";
+    drop.hidden = true;
+    document.body.appendChild(drop);
   }
 
-  var inp = document.getElementById("tvQuickInput");
   var currentList = [];
 
   function placeDrop() {
     var r = wrap.getBoundingClientRect();
-    var w = Math.max(290, Math.min(340, r.width + 110));
+    var w = Math.max(290, Math.min(340, Math.round(r.width + 90)));
     var left = Math.round(r.left + r.width / 2 - w / 2);
     left = Math.max(8, Math.min(window.innerWidth - w - 8, left));
     drop.style.width = w + "px";
     drop.style.left = left + "px";
     drop.style.top = Math.round(r.bottom + 6) + "px";
-    drop.style.transform = "none";
   }
 
   function pickChart(item) {
